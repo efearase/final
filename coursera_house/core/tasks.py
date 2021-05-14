@@ -60,7 +60,6 @@ def get_data():
 
 
 def post_data(final_data):
-
     controller_url = settings.SMART_HOME_API_URL
     try:
         requests.post(
@@ -159,7 +158,7 @@ def check_and_update_data(data):
                                             }
                                         )
 
-            elif (item['name'] == 'outdoor_light' and item['value'] < 50) or\
+            elif (item['name'] == 'outdoor_light' and item['value'] < 20) or \
                     (item['name'] == 'bedroom_light' and item['value'] is True):
                 for item2 in data['controllers']:
                     if item2['name'] == 'curtains' and item2['value'] != 'slightly_open':
@@ -178,7 +177,7 @@ def check_and_update_data(data):
 
         for item in data['controllers']:
             # 6
-            if item['name'] == 'smoke_detector' and item['value'] is True:
+            if item['name'] == 'smoke_detector' and item['value'] == True:
                 for item2 in data['controllers']:
                     if item2['name'] == 'air_conditioner' and item2['value'] is not False:
                         final_data["controllers"].append(
@@ -188,7 +187,7 @@ def check_and_update_data(data):
                             }
                         )
                 for item2 in data['controllers']:
-                    if item2['name'] == 'bedroom_light' and item2['value'] is not False:
+                    if item2['name'] == 'bedroom_light' and item2['value'] == True:
                         final_data["controllers"].append(
                             {
                                 "name": 'bedroom_light',
@@ -196,7 +195,7 @@ def check_and_update_data(data):
                             }
                         )
                 for item2 in data['controllers']:
-                    if item2['name'] == 'bathroom_light' and item2['value'] is not False:
+                    if item2['name'] == 'bathroom_light' and item2['value'] == True:
                         final_data["controllers"].append(
                             {
                                 "name": 'bathroom_light',
@@ -210,7 +209,7 @@ def check_and_update_data(data):
                         break
                 else:
                     for item4 in data['controllers']:
-                        if item4['name'] == 'boiler' and item4['value'] is not False:
+                        if item4['name'] == 'boiler' and item4['value'] == True:
                             final_data["controllers"].append(
                                 {
                                     "name": 'boiler',
@@ -245,9 +244,9 @@ def check_and_update_data(data):
                                             "value": True
                                         }
                                     )
-                        if bedroom_temperature <= bedroom_target_temperature * 0.9:
+                        if bedroom_temperature <= bedroom_target_temperature * 0.98:
                             for item4 in data['controllers']:
-                                if item4['name'] == 'air_conditioner' and item4['value'] is not False:
+                                if item4['name'] == 'air_conditioner' and item4['value'] == True:
                                     final_data["controllers"].append(
                                         {
                                             "name": 'air_conditioner',
@@ -263,7 +262,7 @@ def ch_send_mail():
     send_mail(
         'умный дом',
         'вода отключена',
-        'efaras@yandex.ru',
+        'nikishin.gs@phystech.edu',
         [settings.EMAIL_RECEPIENT],
-        fail_silently=False,
+        fail_silently=True,
     )
