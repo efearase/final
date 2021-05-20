@@ -15,10 +15,8 @@ def smart_home_manager():
     try:
         data = get_data()
         settings.TEMPLATE_DATA = data
-        # print(data)
         if data != 0:
             new_data = check_and_update_data(data)
-            # print(new_data)
             if new_data["controllers"]:
                 post_data(new_data)
         else:
