@@ -107,11 +107,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-SMART_HOME_ACCESS_TOKEN = '57a84d3ec4aaa1d532ba5d5f68d6a33dea757259130345781f73c1f4ebb93a47'
+SMART_HOME_ACCESS_TOKEN = '5289ba68adaaec1671587334347fa9300d3c82537a5570d11ef04f77d1f040ad'
 SMART_HOME_API_URL = os.getenv('SMART_HOME_API_URL', 'https://smarthome.webpython.graders.eldf.ru/api/user.controller')
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'localhost')
 EMAIL_PORT = os.getenv('EMAIL_PORT', 25)
-EMAIL_RECEPIENT = os.getenv('EMAIL_RECEPIENT', 'teliakova.ea@phystech.edu')
+EMAIL_RECEPIENT = os.getenv('EMAIL_RECEPIENT', 'nikishin.gs@phystech.edu')
 
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'

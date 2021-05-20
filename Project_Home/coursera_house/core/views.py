@@ -65,7 +65,7 @@ class ControllerView(FormView):
 
     def form_valid(self, form):
         try:
-            schema = ControllerViewSchema()
+            schema = ControllerViewSchema(strict=True)
             data = schema.load(self.request.POST)
             bedroom_target_temperature = data.data['bedroom_target_temperature']
             hot_water_target_temperature = data.data['hot_water_target_temperature']
