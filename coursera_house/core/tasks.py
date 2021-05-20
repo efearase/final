@@ -5,7 +5,6 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from .models import Setting
 
-
 TOKEN = settings.SMART_HOME_ACCESS_TOKEN
 url = settings.SMART_HOME_API_URL
 headers = {'Authorization': f'Bearer {TOKEN}'}
@@ -27,13 +26,6 @@ def smart_home_manager():
 
         if controller_data['hot_water']['value']:
             payload['controllers'].append({'name': 'hot_water', 'value': False})
-        email = EmailMessage(
-            'leak detector',
-            'text',
-            settings.EMAIL_HOST,
-            [settings.EMAIL_RECEPIENT],
-        )
-        email.send(fail_silently=False)
 
     # если протечка или нет холодной воды
     if controller_data['leak_detector']['value'] or \
@@ -88,14 +80,12 @@ def smart_home_manager():
     if boiler_temperature > hot_water_target_temperature * 1.1:
         payload['controllers'].append({'name': 'boiler', 'value': False})
 
-    if (bedroom_temperature < bedroom_target_temperature * 0.9) and \
-            can_turn_on['air_conditioner']:
+    if (bedroom_temperature < bedroom_target_temperature * 0.9):
         payload['controllers'].append({'name': 'air_conditioner', 'value': False})
 
-    if bedroom_temperature > bedroom_target_temperature * 1.1:
+    if bedroom_temperature > bedroom_target_temperature * 1.1 and \
+            can_turn_on['air_conditioner']:
         payload['controllers'].append({'name': 'air_conditioner', 'value': True})
-
-
 
     outdoor_light = controller_data['outdoor_light']['value']
     bedroom_light = controller_data['bedroom_light']['value']
@@ -112,5 +102,4 @@ def smart_home_manager():
         for item in payload['controllers']:
             if item not in unique:
                 unique.append(item)
-        payload['controllers'] = unique
-        requests.post(url, headers=headers, json=payload)
+        requests.post(url, headers=headers, json=unique)
