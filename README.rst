@@ -59,8 +59,8 @@ Coursera House
     
     leak_detector –  Датчик протечки воды (true – протечка, false – сухо).
     
-    Установка
----------
+Установка
+---------  
 
 Установите pipenv https://docs.pipenv.org/
 
